@@ -1,15 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:my_pup_simple/src/helpers/calculate_growth_stage.dart';
-import 'package:my_pup_simple/src/helpers/calculate_time_between.dart';
 import 'package:my_pup_simple/puppy_profile/model/puppy.dart';
 import 'package:my_pup_simple/src/constants/strings.dart';
 
 class PuppyPreferences {
   static late SharedPreferences _preferences;
   static const myPuppy = Puppy(
-    imagePath: 'assets/images/puppy.jpeg',
+    imagePath: '',
     name: 'Miki',
     owner: 'Tim',
     birthdate: '2023-11-24',

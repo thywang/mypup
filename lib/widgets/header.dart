@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_pup_simple/src/constants/app_sizes.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 
 class HeaderWidget extends StatelessWidget {

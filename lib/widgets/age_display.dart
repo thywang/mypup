@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
-import 'package:my_pup_simple/src/constants/app_colors.dart';
-import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
 import 'package:my_pup_simple/src/helpers/calculate_time_between.dart';
 
 class AgeDisplay extends StatelessWidget {
@@ -36,16 +34,15 @@ class AgeDisplay extends StatelessWidget {
         width: 70,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Text(
               value,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             gapH2,
             Text(
               text,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ],
         ),

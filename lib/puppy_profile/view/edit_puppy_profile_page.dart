@@ -1,18 +1,14 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:my_pup_simple/src/helpers/calculate_growth_stage.dart';
 import 'package:my_pup_simple/src/helpers/calculate_time_between.dart';
 import 'package:my_pup_simple/widgets/button.dart';
 import 'package:my_pup_simple/widgets/text_field.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/puppy_profile/model/puppy.dart';
 import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
 import 'package:my_pup_simple/widgets/profile.dart';
-import 'package:my_pup_simple/widgets/age_display.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 

@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:my_pup_simple/src/constants/app_sizes.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 
 class ProfileWidget extends StatelessWidget {
@@ -34,8 +32,8 @@ class ProfileWidget extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
-          image: imgFile == null
-              ? AssetImage(imagePath)
+          image: imagePath.isEmpty
+              ? const AssetImage('assets/images/puppy.jpeg')
               : FileImage(imgFile) as ImageProvider,
           fit: BoxFit.cover,
           width: 150,

@@ -4,7 +4,6 @@ import 'package:my_pup_simple/tip/model/tip.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
 import 'package:my_pup_simple/widgets/header.dart';
-import 'package:my_pup_simple/widgets/homepage_header.dart';
 import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
 import 'package:my_pup_simple/puppy_profile/model/puppy.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -45,17 +44,6 @@ class _TipPageState extends State<TipPage> {
 
   @override
   Widget build(BuildContext context) {
-    //final puppy = PuppyPreferences.getMyPuppy();
-
-// todo: don't call each time build!
-    // final tips = FirebaseFirestore.instance
-    //     .collection(collectionName)
-    //     .withConverter(
-    //       fromFirestore: Tip.fromFirestore,
-    //       toFirestore: (Tip tip, _) => tip.toFirestore(),
-    //     )
-    //     .where(puppy.growthStage, isEqualTo: true);
-    // print(collectionName);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: tipColor,

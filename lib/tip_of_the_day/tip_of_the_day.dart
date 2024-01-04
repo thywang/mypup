@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
-import 'package:my_pup_simple/src/constants/strings.dart';
-import 'package:my_pup_simple/tip/tip.dart';
-import 'package:my_pup_simple/tip/model/tip.dart';
 import 'package:my_pup_simple/tip_of_the_day/data/tip_of_the_day_repository.dart';
 
 class TipOfTheDay extends StatefulWidget {

@@ -1,9 +1,6 @@
-import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:json_theme/json_theme.dart';
 import 'package:my_pup_simple/bootstrap.dart';
 import 'package:my_pup_simple/firebase_options.dart';
 import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
@@ -16,10 +13,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // initialize shared preferences
   await PuppyPreferences.init();
-  // load theme
-  // final themeStr = await rootBundle.loadString('assets/appainter_theme.json');
-  // final themeJson = jsonDecode(themeStr);
-  // final theme = ThemeDecoder.decodeThemeData(themeJson)!;
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

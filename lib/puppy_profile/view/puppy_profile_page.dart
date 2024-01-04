@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_pup_simple/puppy_profile/puppy_profile.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
-import 'package:my_pup_simple/src/constants/app_colors.dart';
-import 'package:my_pup_simple/puppy_profile/model/puppy.dart';
 import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
 import 'package:my_pup_simple/widgets/profile.dart';
 import 'package:my_pup_simple/widgets/age_display.dart';
