@@ -317,18 +317,26 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_ui_firestore
-      sha256: "783b0fe99fc739d68500b554b96e6ff83c35e1b8ef98cdb9275ee5fca0b5d555"
+      sha256: "2797ae050893a0e5446356dce5cbcb88ae0b5682f803fcaabd956444183068d0"
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.15"
+    version: "1.6.0"
   firebase_ui_localizations:
     dependency: transitive
     description:
       name: firebase_ui_localizations
-      sha256: "3224f45191614bb67d95801689b31a3bb07d5581dfad20c815bf8317b088f003"
+      sha256: ffd39b0b42271dbe2ad8831b41ab6f03d45ee618cec5afd750f02dae2ecba72d
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.0"
+    version: "1.10.0"
+  firebase_ui_shared:
+    dependency: transitive
+    description:
+      name: firebase_ui_shared
+      sha256: f1d07c130a39104d32fba1dab274b7bcb13be2bf4e652624a4ccabb58f9781f1
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.1"
   flutter:
     dependency: "direct main"
     description: flutter
