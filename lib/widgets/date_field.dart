@@ -72,28 +72,23 @@ class _DateFieldWidgetState extends State<DateFieldWidget> {
               );
 
               if (pickedDate != null) {
-                if (kDebugMode) {
-                  print(
-                    pickedDate,
-                  );
-                } // pickedDate output format => 2021-03-10 00:00:00.000
+                debugPrint(
+                  pickedDate.toString(),
+                ); // pickedDate output format => 2021-03-10 00:00:00.000
                 final formattedDate =
                     DateFormat('yyyy-MM-dd').format(pickedDate);
-                if (kDebugMode) {
-                  print(formattedDate);
-                } // formatted date output using intl package => 2021-03-16
+                debugPrint(
+                    formattedDate); // formatted date output using intl package => 2021-03-16
 
                 setState(() {
                   controller.text =
                       formattedDate; // set output date to TextField value.
                 });
               } else {
-                if (kDebugMode) {
-                  print('Date is not selected');
-                }
+                debugPrint('Date is not selected');
               }
             },
-            onChanged: (date) => {print('date changed')},
+            onChanged: (date) => {debugPrint('date changed')},
           ),
         ],
       );

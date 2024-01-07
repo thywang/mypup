@@ -1,7 +1,9 @@
 import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
 import 'package:my_pup_simple/tip/model/tip.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TipOfTheDayRepository {
   final puppy = PuppyPreferences.getMyPuppy();
@@ -21,7 +23,7 @@ class TipOfTheDayRepository {
   }
 
   Future<String> fetchAndCacheTipOfTheDay() async {
-    print('fetchAndCacheTipOfTheDay');
+    debugPrint('fetchAndCacheTipOfTheDay');
     try {
       final db = FirebaseFirestore.instance;
       final tips = db.collection('generalTips');

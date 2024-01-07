@@ -33,7 +33,7 @@ class ProfileWidget extends StatelessWidget {
         color: Colors.transparent,
         child: Ink.image(
           image: imagePath.isEmpty
-              ? const AssetImage('assets/images/puppy.jpeg')
+              ? const AssetImage('assets/puppy.jpeg')
               : FileImage(imgFile) as ImageProvider,
           fit: BoxFit.cover,
           width: 150,

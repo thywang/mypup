@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
+import 'package:my_pup_simple/puppy_profile/model/puppy.dart';
+import 'package:my_pup_simple/src/constants/app_colors.dart';
+import 'package:my_pup_simple/src/constants/app_sizes.dart';
 import 'package:my_pup_simple/src/helpers/calculate_growth_stage.dart';
 import 'package:my_pup_simple/src/helpers/calculate_time_between.dart';
 import 'package:my_pup_simple/widgets/button.dart';
-import 'package:my_pup_simple/widgets/text_field.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:my_pup_simple/src/constants/app_sizes.dart';
-import 'package:my_pup_simple/src/constants/app_colors.dart';
-import 'package:my_pup_simple/puppy_profile/model/puppy.dart';
-import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
 import 'package:my_pup_simple/widgets/profile.dart';
-import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
+import 'package:my_pup_simple/widgets/text_field.dart';
 
 class EditPuppyProfilePage extends StatefulWidget {
-  const EditPuppyProfilePage({Key? key}) : super(key: key);
+  const EditPuppyProfilePage({super.key});
 
   @override
   State<EditPuppyProfilePage> createState() => _EditPuppyProfilePageState();
@@ -144,15 +143,13 @@ class _EditPuppyProfilePageState extends State<EditPuppyProfilePage> {
             );
 
             if (pickedDate != null) {
-              if (kDebugMode) {
-                print(
-                  pickedDate,
-                );
-              } // pickedDate output format => 2021-03-10 00:00:00.000
+              debugPrint(
+                pickedDate.toString(),
+              ); // pickedDate output format => 2021-03-10 00:00:00.000
               final formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-              if (kDebugMode) {
-                print(formattedDate);
-              } // formatted date output using intl package => 2021-03-16
+              debugPrint(
+                formattedDate,
+              ); // formatted date output using intl package => 2021-03-16
 
               final ageInWeeks = CalculateTimeBetween.weeksBetween(
                 DateTime.parse(formattedDate),
@@ -171,12 +168,10 @@ class _EditPuppyProfilePageState extends State<EditPuppyProfilePage> {
                 );
               });
             } else {
-              if (kDebugMode) {
-                print('Date is not selected');
-              }
+              debugPrint('Date is not selected');
             }
           },
-          onChanged: (date) => {print('date changed')},
+          onChanged: (date) => {debugPrint('date changed')},
         ),
       ],
     );

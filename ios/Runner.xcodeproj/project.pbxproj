@@ -500,15 +500,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 2024010501;
 				DEVELOPMENT_TEAM = XQPYS32GZ9;
 				ENABLE_BITCODE = NO;
-				FLAVOR_APP_NAME = "MyPup";
+				FLAVOR_APP_NAME = MyPup;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyPuppy;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PACKAGE_CONFIG = .dart_tool/package_config.json;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.verygoodcore.mypup.simple.my-pup-simple";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -595,15 +597,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 2024010501;
 				DEVELOPMENT_TEAM = XQPYS32GZ9;
 				ENABLE_BITCODE = NO;
-				FLAVOR_APP_NAME = testApp;
+				FLAVOR_APP_NAME = MyPup;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyPuppy;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PACKAGE_CONFIG = .dart_tool/package_config.json;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.verygoodcore.mypup.simple.my-pup-simple";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -685,15 +689,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 2024010501;
 				DEVELOPMENT_TEAM = XQPYS32GZ9;
 				ENABLE_BITCODE = NO;
-				FLAVOR_APP_NAME = "MyPup";
+				FLAVOR_APP_NAME = MyPup;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyPuppy;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PACKAGE_CONFIG = .dart_tool/package_config.json;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.verygoodcore.mypup.simple.my-pup-simple";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -780,15 +786,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 2024010501;
 				DEVELOPMENT_TEAM = XQPYS32GZ9;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[DEV] MyPup";
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyPuppy;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PACKAGE_CONFIG = .dart_tool/package_config.json;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.verygoodcore.mypup.simple.my-pup-simple.dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -873,15 +881,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 2024010501;
 				DEVELOPMENT_TEAM = XQPYS32GZ9;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[DEV] MyPup";
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyPuppy;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PACKAGE_CONFIG = .dart_tool/package_config.json;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.verygoodcore.mypup.simple.my-pup-simple.dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -965,15 +975,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 2024010501;
 				DEVELOPMENT_TEAM = XQPYS32GZ9;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[DEV] MyPup";
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyPuppy;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PACKAGE_CONFIG = .dart_tool/package_config.json;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.verygoodcore.mypup.simple.my-pup-simple.dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1060,15 +1072,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-stg";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 2024010501;
 				DEVELOPMENT_TEAM = XQPYS32GZ9;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[STG] MyPup";
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyPuppy;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PACKAGE_CONFIG = .dart_tool/package_config.json;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.verygoodcore.mypup.simple.my-pup-simple.stg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1155,15 +1169,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-stg";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 2024010501;
 				DEVELOPMENT_TEAM = XQPYS32GZ9;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[STG] MyPup";
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyPuppy;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PACKAGE_CONFIG = .dart_tool/package_config.json;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.verygoodcore.mypup.simple.my-pup-simple.stg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1245,15 +1261,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-stg";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				CURRENT_PROJECT_VERSION = 2024010501;
 				DEVELOPMENT_TEAM = XQPYS32GZ9;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[STG] MyPup";
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyPuppy;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PACKAGE_CONFIG = .dart_tool/package_config.json;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.verygoodcore.mypup.simple.my-pup-simple.stg";
 				PRODUCT_NAME = "$(TARGET_NAME)";

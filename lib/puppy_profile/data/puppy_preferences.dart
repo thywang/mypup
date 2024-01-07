@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:my_pup_simple/puppy_profile/model/puppy.dart';
 import 'package:my_pup_simple/src/constants/strings.dart';
@@ -45,10 +46,10 @@ class PuppyPreferences {
         Strings.keyExpirationTime,
         expirationTime.toIso8601String(),
       );
-      print('Tip of the day saved to Shared preferences.');
+      debugPrint('Tip of the day saved to Shared preferences.');
       return true;
     } catch (e) {
-      print('Error saving tip of the day to SharedPreferences: $e');
+      debugPrint('Error saving tip of the day to SharedPreferences: $e');
       return false;
     }
   }
@@ -60,14 +61,14 @@ class PuppyPreferences {
           _preferences.getString(Strings.keyExpirationTime);
 
       if (tipOfTheDay == null || expirationTimeStr == null) {
-        print('No data or expiration time found in SharedPreferences.');
+        debugPrint('No data or expiration time found in SharedPreferences.');
         return '';
       }
 
       final expirationTime = DateTime.parse(expirationTimeStr);
 
       if (expirationTime.isAfter(DateTime.now())) {
-        print('Tip of the day has not expired.');
+        debugPrint('Tip of the day has not expired.');
         // The data has not expired.
         return tipOfTheDay;
       } else {
@@ -75,11 +76,12 @@ class PuppyPreferences {
         _preferences
           ..remove(Strings.keyTipOfTheDay)
           ..remove(Strings.keyExpirationTime);
-        print('Tip of the day has expired. Removed from SharedPreferences.');
+        debugPrint(
+            'Tip of the day has expired. Removed from SharedPreferences.');
         return '';
       }
     } catch (e) {
-      print('Error retrieving tip from SharedPreferences: $e');
+      debugPrint('Error retrieving tip from SharedPreferences: $e');
       return '';
     }
   }
@@ -89,9 +91,9 @@ class PuppyPreferences {
       _preferences
         ..remove(Strings.keyTipOfTheDay)
         ..remove(Strings.keyExpirationTime);
-      print('Tip cleared from SharedPreferences.');
+      debugPrint('Tip cleared from SharedPreferences.');
     } catch (e) {
-      print('Error clearing tip from SharedPreferences: $e');
+      debugPrint('Error clearing tip from SharedPreferences: $e');
     }
   }
 }

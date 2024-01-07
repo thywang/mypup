@@ -11,13 +11,12 @@ dependencies:
   bloc: ^8.1.2
   cloud_firestore: ^4.13.6
   firebase_core: ^2.24.2
-  firebase_database: ^10.3.8
-  firebase_ui_firestore: ^1.5.15
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3
   flutter_localizations:
     sdk: flutter
+  flutter_native_splash: ^2.3.9
   image_picker: ^1.0.5
   intl: ^0.18.0
   json_theme: ^4.0.0
@@ -33,6 +32,10 @@ dev_dependencies:
   mocktail: ^1.0.0
   very_good_analysis: ^5.1.0
 
+flutter_native_splash:
+  color: "#02C39A" # mainAppColor
+  image: assets/logo.png
+
 flutter:
   fonts:
     - family: Roboto
@@ -44,7 +47,6 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-    - assets/logo.svg
-    - assets/appainter_theme.json
+    - assets/logo.png
     - assets/click.mp3
-    - assets/images/puppy.jpeg
+    - assets/puppy.jpeg

@@ -82,7 +82,7 @@ class _AppButtonState extends State<AppButton> {
                       color: widget.textColor,
                       fontSize: widget.fontSize,
                     ),
-                  )
+                  ),
                 ],
               )
             : widget.child,
