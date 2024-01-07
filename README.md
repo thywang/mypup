@@ -9,6 +9,13 @@ An app that provides tips catered to a puppy's growth stage built with Flutter &
 
 > **Note**: this project is a work in progress as tests need to be added.
 
+## Prototype
+
+The prototype built with Figma is available here:
+
+- [MyPup | Figma design](https://www.figma.com/file/o4OCyXPchTgcYt75JpGRvy/MyPup?type=design&node-id=1%3A11&mode=design&t=HeFlKyziI33hFHNV-1
+)
+
 ## Demo
 
 - **Home page** that shows a Tip of the Day (selected randomly daily from a list of tips filtered by the puppy's growth stage).
