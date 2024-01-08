@@ -18,11 +18,11 @@ The prototype built with Figma is available here:
 
 ## Demo
 
-- **Home page** that shows a Tip of the Day (selected randomly daily from a list of tips filtered by the puppy's growth stage).
+- **Home page** that shows a Tip of the Day (selected randomly daily from Firestore Database filtered by the puppy's growth stage).
 
 ![home](https://github.com/thywang/mypup/assets/88808428/b8ad5f51-6316-4170-961a-7843454da8b7)
 
-- **Tips**: general, training, health, and games tips are filtered by the puppy's growth stage and fetched with Firestore stream to get realtime updates.
+- **Tips**: general, training, health, and games tips are filtered by the puppy's growth stage and fetched via Firestore stream to get realtime updates.
 
 ![tip](https://github.com/thywang/mypup/assets/88808428/13f37660-5b88-47ba-a1af-3a03371e3aed) ![tip2](https://github.com/thywang/mypup/assets/88808428/ea060a89-b852-4fb7-b069-eb0d1eadae51)
 
