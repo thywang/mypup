@@ -16,6 +16,7 @@ class App extends StatelessWidget {
         fontFamily: 'Roboto',
         useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: const HomePage(),
