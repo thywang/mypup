@@ -14,6 +14,8 @@ class TipOfTheDayRepository {
       if (description.isNotEmpty) {
         return description;
       } else {
+        // daily update for age in weeks
+        await PuppyPreferences.recalculateAndSaveAgeInWeeks();
         await fetchAndCacheTipOfTheDay();
         return PuppyPreferences.getTipIfNotExpired();
       }

@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:my_pup_simple/puppy_profile/model/puppy.dart';
 import 'package:my_pup_simple/src/constants/strings.dart';
+import 'package:my_pup_simple/src/helpers/calculate_growth_stage.dart';
+import 'package:my_pup_simple/src/helpers/calculate_time_between.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PuppyPreferences {
   static late SharedPreferences _preferences;
@@ -32,6 +35,28 @@ class PuppyPreferences {
     return json == null
         ? myPuppy
         : Puppy.fromJson(jsonDecode(json) as Map<String, dynamic>);
+  }
+
+  static Future<bool> recalculateAndSaveAgeInWeeks() async {
+    try {
+      var puppy = getMyPuppy();
+      final ageInWeeks = CalculateTimeBetween.weeksBetween(
+        DateTime.parse(puppy.birthdate),
+        DateTime.now(),
+      );
+      final growthStage = CalculateGrowthStage.getGrowthStage(ageInWeeks);
+      puppy = puppy.copy(
+        ageInWeeks: ageInWeeks,
+        growthStage: growthStage,
+      );
+      await setMyPuppy(puppy);
+      debugPrint('Age in weeks and growth stage saved to Shared preferences.');
+      return true;
+    } catch (e) {
+      debugPrint(
+          'Error saving age in weeks and growth stage to SharedPreferences: $e');
+      return false;
+    }
   }
 
   static Future<bool> saveTipOfTheDay(
