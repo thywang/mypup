@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_pup_simple/src/app/app.dart';
 import 'package:my_pup_simple/home/home.dart';
+import 'package:my_pup_simple/src/app/app.dart';
 
 void main() {
   group('App', () {

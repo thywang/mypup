@@ -4,7 +4,7 @@ import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/widgets/3d_button.dart';
 
 class ClickerPage extends StatefulWidget {
-  const ClickerPage({Key? key}) : super(key: key);
+  const ClickerPage({super.key});
 
   @override
   State<ClickerPage> createState() => _ClickerPageState();

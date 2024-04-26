@@ -3,16 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 
 class ProfileWidget extends StatelessWidget {
+
+  const ProfileWidget(
+      {required this.imagePath, required this.isEdit, required this.onClicked, super.key,});
   final String imagePath;
   final bool isEdit;
   final VoidCallback onClicked;
-
-  const ProfileWidget(
-      {Key? key,
-      required this.imagePath,
-      required this.isEdit,
-      required this.onClicked})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

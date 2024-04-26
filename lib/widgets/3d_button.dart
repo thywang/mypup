@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
 
 class AppButton extends StatefulWidget {
+
+  const AppButton({required this.text, required this.textColor, required this.backgroundColor, required this.shadowColor, super.key, this.onPressed,
+    this.fontSize = 14,
+    this.child,
+  }) : assert(
+          (child == null && text != '') || (child != null && text == ''),
+          'Either child must be null or text must be empty.',
+        );
   final String text;
   final Widget? child;
   final VoidCallback? onPressed;
@@ -9,19 +17,6 @@ class AppButton extends StatefulWidget {
   final Color textColor;
   final Color backgroundColor;
   final Color shadowColor;
-
-  AppButton({
-    required this.text,
-    this.onPressed,
-    required this.textColor,
-    required this.backgroundColor,
-    required this.shadowColor,
-    this.fontSize = 14,
-    this.child,
-  }) : assert(
-          (child == null && text != '') || (child != null && text == ''),
-          'Either child must be null or text must be empty.',
-        );
 
   @override
   State<AppButton> createState() => _AppButtonState();

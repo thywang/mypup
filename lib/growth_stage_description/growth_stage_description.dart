@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_pup_simple/src/constants/app_sizes.dart';
-import 'package:my_pup_simple/src/constants/app_colors.dart';
-import 'package:my_pup_simple/src/constants/maps.dart';
 import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
+import 'package:my_pup_simple/src/constants/app_colors.dart';
+import 'package:my_pup_simple/src/constants/app_sizes.dart';
+import 'package:my_pup_simple/src/constants/maps.dart';
 
 class GrowthStageDescription extends StatelessWidget {
   const GrowthStageDescription({super.key});

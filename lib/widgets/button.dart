@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:my_pup_simple/src/constants/app_sizes.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
+import 'package:my_pup_simple/src/constants/app_sizes.dart';
 
 class ButtonWidget extends StatelessWidget {
-  final String text;
-  final VoidCallback onClicked;
 
   const ButtonWidget({
-    Key? key,
-    required this.text,
-    required this.onClicked,
-  }) : super(key: key);
+    required this.text, required this.onClicked, super.key,
+  });
+  final String text;
+  final VoidCallback onClicked;
 
   @override
   Widget build(BuildContext context) => ElevatedButton(

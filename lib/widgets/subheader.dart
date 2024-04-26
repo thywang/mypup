@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 
 class SubHeaderWidget extends StatelessWidget {
-  final String text;
 
-  const SubHeaderWidget({Key? key, required this.text}) : super(key: key);
+  const SubHeaderWidget({required this.text, super.key});
+  final String text;
 
   @override
   Widget build(BuildContext context) {

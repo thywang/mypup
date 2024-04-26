@@ -3,10 +3,10 @@ import 'package:my_pup_simple/growth_stage_description/growth_stage_description.
 import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
-import 'package:my_pup_simple/widgets/card.dart';
-import 'package:my_pup_simple/widgets/homepage_header.dart';
 import 'package:my_pup_simple/tip/tip.dart';
 import 'package:my_pup_simple/tip_of_the_day/tip_of_the_day.dart';
+import 'package:my_pup_simple/widgets/card.dart';
+import 'package:my_pup_simple/widgets/homepage_header.dart';
 import 'package:my_pup_simple/widgets/subheader.dart';
 
 class DashboardPage extends StatefulWidget {

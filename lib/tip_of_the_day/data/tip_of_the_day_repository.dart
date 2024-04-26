@@ -33,7 +33,7 @@ class TipOfTheDayRepository {
       String description;
       var snapshot = await tips
           .withConverter(
-            fromFirestore: Tip.fromFirestore,
+            fromFirestore: (snapshot, _) => Tip.fromFirestore(snapshot),
             toFirestore: (Tip tip, _) => tip.toFirestore(),
           )
           .where(puppy.growthStage, isEqualTo: true)
@@ -45,7 +45,7 @@ class TipOfTheDayRepository {
       } else {
         snapshot = await tips
             .withConverter(
-              fromFirestore: Tip.fromFirestore,
+              fromFirestore: (snapshot, _) => Tip.fromFirestore(snapshot),
               toFirestore: (Tip tip, _) => tip.toFirestore(),
             )
             .where(puppy.growthStage, isEqualTo: true)

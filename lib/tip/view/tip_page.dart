@@ -1,19 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:my_pup_simple/tip/model/tip.dart';
-import 'package:my_pup_simple/src/constants/app_colors.dart';
-import 'package:my_pup_simple/src/constants/app_sizes.dart';
-import 'package:my_pup_simple/widgets/header.dart';
 import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
 import 'package:my_pup_simple/puppy_profile/model/puppy.dart';
+import 'package:my_pup_simple/src/constants/app_colors.dart';
+import 'package:my_pup_simple/src/constants/app_sizes.dart';
+import 'package:my_pup_simple/tip/model/tip.dart';
+import 'package:my_pup_simple/widgets/header.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TipPage extends StatefulWidget {
+
+  const TipPage({required this.name, required this.mainColor, super.key});
   final String name;
   final Color mainColor;
-
-  const TipPage({Key? key, required this.name, required this.mainColor})
-      : super(key: key);
 
   @override
   State<TipPage> createState() => _TipPageState();
@@ -35,8 +34,8 @@ class _TipPageState extends State<TipPage> {
     puppy = PuppyPreferences.getMyPuppy();
     tips = FirebaseFirestore.instance
         .collection(collectionName)
-        .withConverter(
-          fromFirestore: Tip.fromFirestore,
+        .withConverter<Tip>(
+          fromFirestore: (snapshot, _) => Tip.fromFirestore(snapshot),
           toFirestore: (Tip tip, _) => tip.toFirestore(),
         )
         .where(PuppyPreferences.getMyPuppy().growthStage, isEqualTo: true);
@@ -218,7 +217,7 @@ class _TipPageState extends State<TipPage> {
                       }
                     },
                     separatorBuilder: (context, index) => gapH16,
-                    itemCount: snapshot.data?.docs.length as int,
+                    itemCount: snapshot.data!.docs.length,
                   );
 
                   // return ListView.builder(

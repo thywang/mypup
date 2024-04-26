@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
 import 'package:my_pup_simple/puppy_profile/puppy_profile.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
-import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
-import 'package:my_pup_simple/widgets/profile.dart';
 import 'package:my_pup_simple/widgets/age_display.dart';
+import 'package:my_pup_simple/widgets/profile.dart';
 
 class PuppyProfilePage extends StatefulWidget {
-  const PuppyProfilePage({Key? key}) : super(key: key);
+  const PuppyProfilePage({super.key});
 
   @override
   State<PuppyProfilePage> createState() => _PuppyProfilePageState();

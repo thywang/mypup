@@ -54,7 +54,7 @@ class PuppyPreferences {
       return true;
     } catch (e) {
       debugPrint(
-          'Error saving age in weeks and growth stage to SharedPreferences: $e');
+          'Error saving age in weeks and growth stage to SharedPreferences: $e',);
       return false;
     }
   }
@@ -102,7 +102,7 @@ class PuppyPreferences {
           ..remove(Strings.keyTipOfTheDay)
           ..remove(Strings.keyExpirationTime);
         debugPrint(
-            'Tip of the day has expired. Removed from SharedPreferences.');
+            'Tip of the day has expired. Removed from SharedPreferences.',);
         return '';
       }
     } catch (e) {

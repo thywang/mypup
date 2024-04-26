@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:my_pup_simple/src/constants/app_sizes.dart';
-import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
+import 'package:my_pup_simple/src/constants/app_colors.dart';
+import 'package:my_pup_simple/src/constants/app_sizes.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
-  const HomeHeaderWidget({Key? key}) : super(key: key);
+  const HomeHeaderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class HomeHeaderWidget extends StatelessWidget {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

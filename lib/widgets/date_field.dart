@@ -1,22 +1,18 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
-import 'package:intl/intl.dart';
 
 class DateFieldWidget extends StatefulWidget {
+
+  const DateFieldWidget({
+    required this.label, required this.text, required this.onChanged, super.key,
+    this.maxLines = 1,
+  });
   final int maxLines;
   final String label;
   final String text;
   final ValueChanged<String> onChanged;
-
-  const DateFieldWidget({
-    Key? key,
-    this.maxLines = 1,
-    required this.label,
-    required this.text,
-    required this.onChanged,
-  }) : super(key: key);
 
   @override
   State<DateFieldWidget> createState() => _DateFieldWidgetState();
@@ -78,7 +74,7 @@ class _DateFieldWidgetState extends State<DateFieldWidget> {
                 final formattedDate =
                     DateFormat('yyyy-MM-dd').format(pickedDate);
                 debugPrint(
-                    formattedDate); // formatted date output using intl package => 2021-03-16
+                    formattedDate,); // formatted date output using intl package => 2021-03-16
 
                 setState(() {
                   controller.text =

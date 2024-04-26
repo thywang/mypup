@@ -3,11 +3,8 @@ import 'package:my_pup_simple/src/constants/app_sizes.dart';
 
 class TextFieldWidget extends StatefulWidget {
   const TextFieldWidget({
-    super.key,
+    required this.label, required this.text, required this.onChanged, super.key,
     this.maxLines = 1,
-    required this.label,
-    required this.text,
-    required this.onChanged,
   });
 
   final int maxLines;

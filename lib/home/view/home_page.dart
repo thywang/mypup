@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_pup_simple/src/constants/app_colors.dart';
+import 'package:my_pup_simple/clicker/clicker.dart';
 import 'package:my_pup_simple/dashboard/dashboard.dart';
 import 'package:my_pup_simple/puppy_profile/puppy_profile.dart';
-import 'package:my_pup_simple/clicker/clicker.dart';
+import 'package:my_pup_simple/src/constants/app_colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

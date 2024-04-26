@@ -3,12 +3,11 @@ import 'package:my_pup_simple/src/constants/app_sizes.dart';
 import 'package:my_pup_simple/src/helpers/calculate_time_between.dart';
 
 class AgeDisplay extends StatelessWidget {
-  final String birthdate;
 
   const AgeDisplay({
-    Key? key,
-    required this.birthdate,
-  }) : super(key: key);
+    required this.birthdate, super.key,
+  });
+  final String birthdate;
 
   @override
   Widget build(BuildContext context) {

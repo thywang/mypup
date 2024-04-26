@@ -4,11 +4,8 @@ import 'package:my_pup_simple/src/constants/app_sizes.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard({
-    Key? key,
-    required this.name,
-    required this.mainColor,
-    required this.iconData,
-  }) : super(key: key);
+    required this.name, required this.mainColor, required this.iconData, super.key,
+  });
 
   final String name;
   final Color mainColor;

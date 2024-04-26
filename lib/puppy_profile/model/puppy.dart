@@ -1,10 +1,4 @@
 class Puppy {
-  final String imagePath;
-  final String name;
-  final String owner;
-  final String birthdate;
-  final int ageInWeeks;
-  final String growthStage;
 
   const Puppy({
     required this.imagePath,
@@ -14,6 +8,21 @@ class Puppy {
     required this.ageInWeeks,
     required this.growthStage,
   });
+
+  factory Puppy.fromJson(Map<String, dynamic> json) => Puppy(
+        imagePath: json['imagePath'] as String,
+        name: json['name'] as String,
+        owner: json['owner'] as String,
+        birthdate: json['birthdate'] as String,
+        ageInWeeks: json['ageInWeeks'] as int,
+        growthStage: json['growthStage'] as String,
+      );
+  final String imagePath;
+  final String name;
+  final String owner;
+  final String birthdate;
+  final int ageInWeeks;
+  final String growthStage;
 
   Puppy copy({
     String? imagePath,
@@ -30,15 +39,6 @@ class Puppy {
         birthdate: birthdate ?? this.birthdate,
         ageInWeeks: ageInWeeks ?? this.ageInWeeks,
         growthStage: growthStage ?? this.growthStage,
-      );
-
-  factory Puppy.fromJson(Map<String, dynamic> json) => Puppy(
-        imagePath: json['imagePath'] as String,
-        name: json['name'] as String,
-        owner: json['owner'] as String,
-        birthdate: json['birthdate'] as String,
-        ageInWeeks: json['ageInWeeks'] as int,
-        growthStage: json['growthStage'] as String,
       );
 
   Map<String, dynamic> toJson() => {

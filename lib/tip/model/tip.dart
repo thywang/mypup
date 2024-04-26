@@ -1,31 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Tip {
-  final String title;
-  final String description;
-  final List<String>? steps;
-  final bool infancy;
-  final bool terribleTwos;
-  final bool adolescent;
-  final bool puberty;
-  final bool teen;
-  final String? video;
 
   const Tip({
     required this.title,
     required this.description,
-    this.steps,
-    required this.infancy,
-    required this.terribleTwos,
-    required this.adolescent,
-    required this.puberty,
-    required this.teen,
+    required this.infancy, required this.terribleTwos, required this.adolescent, required this.puberty, required this.teen, this.steps,
     this.video,
   });
 
   factory Tip.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
   ) {
     final data = snapshot.data();
     return Tip(
@@ -42,6 +27,15 @@ class Tip {
       video: data?['video'] is String ? (data?['video'] as String) : null,
     );
   }
+  final String title;
+  final String description;
+  final List<String>? steps;
+  final bool infancy;
+  final bool terribleTwos;
+  final bool adolescent;
+  final bool puberty;
+  final bool teen;
+  final String? video;
 
   Map<String, dynamic> toFirestore() {
     return {
