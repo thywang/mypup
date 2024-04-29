@@ -14,6 +14,7 @@ class HomeHeaderWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          gapH32,
           Row(
             children: [
               Flexible(

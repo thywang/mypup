@@ -3,9 +3,9 @@ import 'package:my_pup_simple/src/constants/app_sizes.dart';
 import 'package:my_pup_simple/src/helpers/calculate_time_between.dart';
 
 class AgeDisplay extends StatelessWidget {
-
   const AgeDisplay({
-    required this.birthdate, super.key,
+    required this.birthdate,
+    super.key,
   });
   final String birthdate;
 
@@ -13,7 +13,8 @@ class AgeDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     final timeSince =
         CalculateTimeBetween.monthsWeeksDaysSince(DateTime.parse(birthdate));
-    return IntrinsicHeight(
+    return Padding(
+      padding: const EdgeInsets.only(left: 50, right: 50),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -29,21 +30,24 @@ class AgeDisplay extends StatelessWidget {
 
   Widget buildDivider() => const SizedBox(height: 24, child: VerticalDivider());
   Widget buildAgeComponent(BuildContext context, String value, String text) =>
-      SizedBox(
-        width: 70,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              value,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-            ),
-            gapH2,
-            Text(
-              text,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ],
+      Flexible(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Text(
+                value,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+              gapH2,
+              Text(
+                text,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
       );
 }
