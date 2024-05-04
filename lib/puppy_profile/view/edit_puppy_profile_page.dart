@@ -20,19 +20,25 @@ class EditPuppyProfilePage extends StatefulWidget {
 
 class _EditPuppyProfilePageState extends State<EditPuppyProfilePage> {
   late Puppy puppy;
-  late final TextEditingController controller;
+  late final TextEditingController _nameController;
+  late final TextEditingController _birthdateController;
+  late final TextEditingController _ownerController;
 
   @override
   void initState() {
     super.initState();
 
     puppy = PuppyPreferences.getMyPuppy();
-    controller = TextEditingController(text: puppy.birthdate);
+    _nameController = TextEditingController(text: puppy.name);
+    _birthdateController = TextEditingController(text: puppy.birthdate);
+    _ownerController = TextEditingController(text: puppy.owner);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _nameController.dispose();
+    _birthdateController.dispose();
+    _ownerController.dispose();
 
     super.dispose();
   }
@@ -84,6 +90,7 @@ class _EditPuppyProfilePageState extends State<EditPuppyProfilePage> {
           TextFieldWidget(
             label: 'Name',
             text: puppy.name,
+            controller: _nameController,
             onChanged: (name) => puppy = puppy.copy(name: name),
           ),
           gapH24,
@@ -92,6 +99,7 @@ class _EditPuppyProfilePageState extends State<EditPuppyProfilePage> {
           TextFieldWidget(
             label: 'Owner',
             text: puppy.owner,
+            controller: _ownerController,
             onChanged: (owner) => puppy = puppy.copy(owner: owner),
           ),
           gapH24,
@@ -121,7 +129,7 @@ class _EditPuppyProfilePageState extends State<EditPuppyProfilePage> {
         ),
         gapH8,
         TextField(
-          controller: controller,
+          controller: _birthdateController,
           decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.date_range,
@@ -159,7 +167,7 @@ class _EditPuppyProfilePageState extends State<EditPuppyProfilePage> {
                   CalculateGrowthStage.getGrowthStage(ageInWeeks);
 
               setState(() {
-                controller.text = formattedDate;
+                _birthdateController.text = formattedDate;
 
                 puppy = puppy.copy(
                   birthdate: formattedDate,

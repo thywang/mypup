@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_pup_simple/clicker/clicker.dart';
 import 'package:my_pup_simple/dashboard/dashboard.dart';
 import 'package:my_pup_simple/puppy_profile/puppy_profile.dart';
+import 'package:my_pup_simple/schedule/schedule.dart';
+import 'package:my_pup_simple/schedule/view/edit_schedule_page.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,6 +35,7 @@ class _HomePageState extends State<HomePage> {
           DashboardPage(),
           ClickerPage(),
           PuppyProfilePage(),
+          SchedulePage(),
         ],
       ),
       bottomNavigationBar: NavigationBar(
@@ -77,6 +80,16 @@ class _HomePageState extends State<HomePage> {
             label: 'My Puppy',
             selectedIcon: Icon(
               Icons.pets,
+              color: mainAppColor,
+            ),
+          ),
+          NavigationDestination(
+            icon: const Icon(
+              Icons.calendar_month_outlined,
+            ),
+            label: 'My Schedule',
+            selectedIcon: Icon(
+              Icons.calendar_month,
               color: mainAppColor,
             ),
           ),
