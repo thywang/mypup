@@ -1,7 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
-import 'package:my_pup_simple/widgets/3d_button.dart';
+import 'package:my_pup_simple/widgets/button_3d.dart';
 
 class ClickerPage extends StatefulWidget {
   const ClickerPage({super.key});

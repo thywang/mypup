@@ -9,7 +9,6 @@ import 'package:my_pup_simple/widgets/header.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TipPage extends StatefulWidget {
-
   const TipPage({required this.name, required this.mainColor, super.key});
   final String name;
   final Color mainColor;
@@ -83,16 +82,6 @@ class _TipPageState extends State<TipPage> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text('Loading');
                   }
-
-                  // for debugging:
-                  // return ListView.separated(
-                  //   itemBuilder: (context, index) {
-                  //     Tip tip = snapshot.data!.docs[index].data();
-                  //     return Text('${tip.title}');
-                  //   },
-                  //   separatorBuilder: (context, index) => gapH16,
-                  //   itemCount: snapshot.data?.docs.length as int,
-                  // );
 
                   return ListView.separated(
                     itemBuilder: (context, index) {
@@ -219,50 +208,6 @@ class _TipPageState extends State<TipPage> {
                     separatorBuilder: (context, index) => gapH16,
                     itemCount: snapshot.data!.docs.length,
                   );
-
-                  // return ListView.builder(
-                  //   itemCount: snapshot.data?.docs.length,
-                  //   itemBuilder: (context, index) {
-                  //     if (snapshot.data?.docs[index]['steps'] is List &&
-                  //         (snapshot.data?.docs[index]['steps'] as List)
-                  //             .isNotEmpty) {
-                  //       final steps =
-                  //           snapshot.data?.docs[index]['steps'] as List;
-
-                  //       return ExpansionTile(
-                  //         title: Text(
-                  //             snapshot.data?.docs[index]['title'] as String),
-                  //         subtitle: Text(
-                  //           snapshot.data?.docs[index]['description']
-                  //               as String,
-                  //         ),
-                  //         children: steps
-                  //             .asMap()
-                  //             .entries
-                  //             .map(
-                  //               (step) => ListTile(
-                  //                 leading: CircleAvatar(
-                  //                   backgroundColor: mainAppColor,
-                  //                   child: Text(
-                  //                       '${step.key + 1}'), // make 1-indexed
-                  //                 ),
-                  //                 title: Text(step.value as String),
-                  //               ),
-                  //             )
-                  //             .toList(),
-                  //       );
-                  //     } else {
-                  //       return ListTile(
-                  //         title: Text(
-                  //             snapshot.data?.docs[index]['title'] as String),
-                  //         subtitle: Text(
-                  //           snapshot.data?.docs[index]['description']
-                  //               as String,
-                  //         ),
-                  //       );
-                  //     }
-                  //   },
-                  // );
                 },
               ),
             ),

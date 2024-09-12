@@ -4,9 +4,11 @@ import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
 
 class DateFieldWidget extends StatefulWidget {
-
   const DateFieldWidget({
-    required this.label, required this.text, required this.onChanged, super.key,
+    required this.label,
+    required this.text,
+    required this.onChanged,
+    super.key,
     this.maxLines = 1,
   });
   final int maxLines;
@@ -74,7 +76,8 @@ class _DateFieldWidgetState extends State<DateFieldWidget> {
                 final formattedDate =
                     DateFormat('yyyy-MM-dd').format(pickedDate);
                 debugPrint(
-                    formattedDate,); // formatted date output using intl package => 2021-03-16
+                  formattedDate,
+                ); // formatted date output using intl package => 2021-03-16
 
                 setState(() {
                   controller.text =

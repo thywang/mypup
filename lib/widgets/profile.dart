@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 
 class ProfileWidget extends StatelessWidget {
-
-  const ProfileWidget(
-      {required this.imagePath, required this.isEdit, required this.onClicked, super.key,});
+  const ProfileWidget({
+    required this.imagePath,
+    required this.isEdit,
+    required this.onClicked,
+    super.key,
+  });
   final String imagePath;
   final bool isEdit;
   final VoidCallback onClicked;

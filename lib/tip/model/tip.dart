@@ -1,11 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Tip {
-
   const Tip({
     required this.title,
     required this.description,
-    required this.infancy, required this.terribleTwos, required this.adolescent, required this.puberty, required this.teen, this.steps,
+    required this.infancy,
+    required this.terribleTwos,
+    required this.adolescent,
+    required this.puberty,
+    required this.teen,
+    this.steps,
     this.video,
   });
 

@@ -26,45 +26,6 @@ class _TipOfTheDayState extends State<TipOfTheDay> {
     setState(() {});
   }
 
-  // Future<String> getTipOfTheDay() async {
-  //   try {
-  //     final db = FirebaseFirestore.instance;
-  //     final tips = db.collection('generalTips');
-  //     final key = tips.doc().id;
-  //     String description;
-  //     var snapshot = await tips
-  //         .withConverter(
-  //           fromFirestore: Tip.fromFirestore,
-  //           toFirestore: (Tip tip, _) => tip.toFirestore(),
-  //         )
-  //         .where(puppy.growthStage, isEqualTo: true)
-  //         .where(FieldPath.documentId, isGreaterThanOrEqualTo: key)
-  //         .limit(1)
-  //         .get();
-  //     if (snapshot.size > 0) {
-  //       description = snapshot.docs[0].data().description;
-  //     } else {
-  //       snapshot = await tips
-  //           .withConverter(
-  //             fromFirestore: Tip.fromFirestore,
-  //             toFirestore: (Tip tip, _) => tip.toFirestore(),
-  //           )
-  //           .where(puppy.growthStage, isEqualTo: true)
-  //           .where(FieldPath.documentId, isGreaterThanOrEqualTo: key)
-  //           .limit(1)
-  //           .get();
-  //       if (snapshot.size > 0) {
-  //         description = snapshot.docs[0].data().description;
-  //       } else {
-  //         description = 'Check out the personalized tips in Tips for You.';
-  //       }
-  //     }
-  //     return description;
-  //   } catch (e) {
-  //     return 'Error fetching Tip of the Day.';
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return ListTile(

@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
 
 class AppButton extends StatefulWidget {
-
-  const AppButton({required this.text, required this.textColor, required this.backgroundColor, required this.shadowColor, super.key, this.onPressed,
+  const AppButton({
+    required this.text,
+    required this.textColor,
+    required this.backgroundColor,
+    required this.shadowColor,
+    super.key,
+    this.onPressed,
     this.fontSize = 14,
     this.child,
   }) : assert(
