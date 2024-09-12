@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:intl/intl.dart';
+import 'package:my_pup_simple/schedule/data/task_controller.dart';
+import 'package:my_pup_simple/schedule/model/task.dart';
+import 'package:my_pup_simple/schedule/schedule.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
 import 'package:my_pup_simple/widgets/button.dart';
@@ -9,21 +11,27 @@ import 'package:my_pup_simple/widgets/subheader.dart';
 import 'package:my_pup_simple/widgets/text_field.dart';
 
 class EditSchedulePage extends StatefulWidget {
-  const EditSchedulePage({super.key});
+  const EditSchedulePage({required this.selectedDay, super.key});
+  final int selectedDay;
 
   @override
   State<EditSchedulePage> createState() => _EditSchedulePageState();
 }
 
 class _EditSchedulePageState extends State<EditSchedulePage> {
-  final today = DateTime.now();
+  final TaskController _taskController = Get.put(TaskController());
+  final _titleController = TextEditingController();
+  final _noteController = TextEditingController();
   var _startTime = DateFormat('h:mm a').format(DateTime.now());
   var _endTime =
       DateFormat('h:mm a').format(DateTime.now().add(const Duration(hours: 1)));
 
   // reminder in minutes
-  var _selectRemind = 5;
+  int _selectedRemind = 5;
   List<int> remindList = [5, 10, 15, 20];
+
+  // selected color index
+  int _selectedColor = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +42,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
           icon: const Icon(Icons.arrow_back, size: 30),
           alignment: Alignment.centerLeft,
           onPressed: () {
-            // Navigate back to the previous screen by popping the current route
-            Navigator.of(context).pop();
+            Get.back<SchedulePage>();
           },
         ),
       ),
@@ -48,12 +55,14 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
             TextFieldWidget(
               label: 'Title',
               hint: 'Enter your title',
+              controller: _titleController,
               onChanged: (title) => {},
             ),
             gapH24,
             TextFieldWidget(
               label: 'Note',
               hint: 'Enter your note',
+              controller: _noteController,
               onChanged: (note) => {},
             ),
             gapH24,
@@ -95,7 +104,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
             gapH24,
             TextFieldWidget(
               label: 'Reminder',
-              hint: '$_selectRemind minutes before',
+              hint: '$_selectedRemind minutes before',
               trailingWidget: DropdownButton(
                 icon: Icon(
                   Icons.keyboard_arrow_down,
@@ -114,15 +123,53 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
                 onChanged: (String? newValue) {
                   if (newValue == null) return;
                   setState(() {
-                    _selectRemind = int.parse(newValue);
+                    _selectedRemind = int.parse(newValue);
                   });
                 },
               ),
             ),
             gapH24,
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Color',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    gapH8,
+                    Wrap(
+                      spacing: Sizes.p12,
+                      children: List<Widget>.generate(
+                        cardColors.length,
+                        (index) => GestureDetector(
+                          onTap: () => setState(() {
+                            _selectedColor = index;
+                          }),
+                          child: CircleAvatar(
+                            radius: Sizes.p16,
+                            backgroundColor: cardColors[index],
+                            child: _selectedColor == index
+                                ? const Icon(
+                                    Icons.done,
+                                    color: Colors.white,
+                                    size: Sizes.p16,
+                                  )
+                                : null,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            gapH24,
             ButtonWidget(
               text: 'Create Task',
-              onClicked: () => Navigator.of(context).pop(),
+              onClicked: _validateData,
             ),
           ],
         ),
@@ -162,5 +209,61 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
             : int.parse(_endTime.split(':')[1].split(' ')[0]),
       ),
     );
+  }
+
+  void _validateData() {
+    if (_titleController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        _snackBar(
+          label: 'Title is required',
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+      return;
+    }
+    
+    // parse start and end times as date time objects to compare
+    final timeFormat = DateFormat('h:mm a');
+    final parsedStartTime = timeFormat.parse(_startTime);
+    final parsedEndTime = timeFormat.parse(_endTime);
+
+    if (!parsedStartTime.isBefore(parsedEndTime)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        _snackBar(
+          label: 'Start time must be before end time',
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+      return;
+    }
+    
+    // add task to database
+    _addTaskToDb();
+    debugPrint('add to ${daysOfTheWeek[widget.selectedDay]}');
+    Get.back<SchedulePage>();
+  }
+
+  SnackBar _snackBar({required String label, required Color backgroundColor}) {
+    return SnackBar(
+      behavior: SnackBarBehavior.floating,
+      content: Text(label),
+      backgroundColor: backgroundColor,
+      duration: const Duration(seconds: 3),
+    );
+  }
+
+  Future<void> _addTaskToDb() async {
+    final id = await _taskController.addTask(
+      task: Task(
+        title: _titleController.text,
+        note: _noteController.text,
+        startTime: _startTime,
+        endTime: _endTime,
+        selectedDay: widget.selectedDay,
+        remind: _selectedRemind,
+        color: _selectedColor,
+      ),
+    );
+    debugPrint('task $id created');
   }
 }

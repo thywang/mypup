@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
 import 'package:my_pup_simple/schedule/view/edit_schedule_page.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
 
-import 'package:my_pup_simple/src/app/view/app.dart';
 import 'package:my_pup_simple/src/helpers/notify_helper.dart';
 import 'package:my_pup_simple/widgets/subheader.dart';
 
@@ -27,7 +26,7 @@ List<String> daysOfTheWeek = [
 
 class _SchedulePageState extends State<SchedulePage> {
   NotifyHelper? notifyHelper;
-  int _selectedIndex = 0;
+  int _selectedDay = 0;
   final PageController _pageController = PageController(viewportFraction: 0.5);
 
   @override
@@ -65,10 +64,8 @@ class _SchedulePageState extends State<SchedulePage> {
               color: mainAppColor,
             ),
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<dynamic>(
-                  builder: (context) => const EditSchedulePage(),
-                ),
+              Get.to<EditSchedulePage>(
+                EditSchedulePage(selectedDay: _selectedDay),
               );
             },
           ),
@@ -84,15 +81,14 @@ class _SchedulePageState extends State<SchedulePage> {
                 padEnds: false,
                 controller: _pageController,
                 onPageChanged: (page) => setState(() {
-                  _selectedIndex = page;
-                  print(daysOfTheWeek[_selectedIndex]);
+                  _selectedDay = page;
                 }),
                 children: <Widget>[
                   for (final (index, day) in daysOfTheWeek.indexed) ...[
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          _selectedIndex = index;
+                          _selectedDay = index;
                         });
                         _pageController.animateToPage(
                           index,
@@ -101,7 +97,7 @@ class _SchedulePageState extends State<SchedulePage> {
                         );
                       },
                       child: Opacity(
-                        opacity: index == _selectedIndex ? 1.0 : 0.5,
+                        opacity: index == _selectedDay ? 1.0 : 0.5,
                         child: ColoredBox(
                           color: mainAppColor,
                           child: Padding(
