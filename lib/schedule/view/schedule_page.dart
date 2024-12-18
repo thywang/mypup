@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
+import 'package:my_pup_simple/schedule/data/task_controller.dart';
+import 'package:my_pup_simple/schedule/model/task.dart';
 import 'package:my_pup_simple/schedule/view/edit_schedule_page.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
@@ -28,6 +30,7 @@ class _SchedulePageState extends State<SchedulePage> {
   NotifyHelper? notifyHelper;
   int _selectedDay = 0;
   final PageController _pageController = PageController(viewportFraction: 0.5);
+  final _taskController = Get.put(TaskController());
 
   @override
   void initState() {
@@ -67,6 +70,8 @@ class _SchedulePageState extends State<SchedulePage> {
               Get.to<EditSchedulePage>(
                 EditSchedulePage(selectedDay: _selectedDay),
               );
+              // refetch all tasks
+              _taskController.getTasks();
             },
           ),
         ],
@@ -114,23 +119,151 @@ class _SchedulePageState extends State<SchedulePage> {
                 ],
               ),
             ),
+            gapH24,
+            _listTasks(),
           ],
         ),
       ),
     );
-    // return GestureDetector(
-    //   child: const SizedBox(
-    //     child: Text(
-    //       'schedule',
-    //       selectionColor: Colors.lightBlueAccent,
-    //     ),
-    //   ),
-    //   onTap: () {
-    //     notifyHelper?.scheduledNotification(
-    //       title: 'schedule',
-    //       body: 'this is a notification',
-    //     );
-    //   },
-    // );
+  }
+
+  Widget _listTasks() {
+    return Expanded(
+      child: Obx(
+        () {
+          if (_taskController.taskList.isEmpty) {
+            return const Center(child: Text('No tasks for today.'));
+          }
+
+          return ListView.separated(
+            itemBuilder: (context, index) {
+              final task = _taskController.taskList[index];
+              return ListTile(
+                onTap: () {
+                  _showTaskActionsBottomSheet(
+                    context,
+                    _taskController.taskList[index],
+                  );
+                },
+                tileColor: cardColors[task.color],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(Sizes.p16),
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.only(
+                    top: Sizes.p12,
+                    bottom: Sizes.p12,
+                  ),
+                  child: Text(
+                    task.title,
+                    style: TextStyle(
+                      color: titleTextColorLight,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                subtitle: Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: Sizes.p8,
+                  ),
+                  child: Text(
+                    task.note,
+                    style: TextStyle(
+                      color: titleTextColorLight,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (context, index) => gapH16,
+            itemCount: _taskController.taskList.length,
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> _showTaskActionsBottomSheet(
+      BuildContext context, Task task) async {
+    return showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height / 3,
+          child: Center(
+            child: Column(
+              children: [
+                gapH16,
+                SizedBox(
+                  height: 6,
+                  width: 120,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(Sizes.p12),
+                    ),
+                  ),
+                ),
+                gapH32,
+                _taskActionButton(
+                  label: 'Edit Task',
+                  onTap: () {},
+                  color: mainAppColor,
+                ),
+                gapH16,
+                _taskActionButton(
+                  label: 'Delete Task',
+                  onTap: () {
+                    _taskController..deleteTask(id: task.id!)
+                    ..getTasks();
+                    Get.back<SchedulePage>();
+                  },
+                  color: Colors.red,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _taskActionButton({
+    required String label,
+    required void Function() onTap,
+    required Color color,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.p16), // Add space on the left and right
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(Sizes.p16),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: Sizes.p12,
+              bottom: Sizes.p12,
+            ),
+            child: Center(
+              // Center the text inside the button
+              child: Text(
+                label,
+                style: TextStyle(
+                  color: titleTextColorLight,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

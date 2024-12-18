@@ -51,7 +51,18 @@ class DBHelper {
     return id;
   }
 
-  // Future<Task> getTask(int id) async {
-  //   final db = await instance.db;
-  // }
+  static Future<List<Task>> getTasks() async {
+    final db = await instance.db;
+    final tasks = await db.query(tableName);
+    return tasks.map(Task.fromJson).toList();
+  }
+
+  static Future<void> deleteTask({required int id}) async {
+    final db = await instance.db;
+    await db.delete(
+      tableName,
+      where: 'id=?',
+      whereArgs: [id],
+    );
+  }
 }
