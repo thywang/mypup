@@ -10,6 +10,7 @@ Color gradientStartColor = const Color(0xFF4051A9);
 Color gradientEndColor = const Color(0xFF9354B9);
 Color dotColor = const Color(0xFFA87DCF);
 // card colors
+List<Color> cardColors = [generalColor, trainingColor, healthColor, gameColor];
 Color generalColor = const Color(0xFFFF7648);
 Color trainingColor = const Color(0xFF8F98FF);
 Color trainingSecondaryColor = const Color(0xFF182A88);

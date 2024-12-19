@@ -3,8 +3,9 @@ import 'package:my_pup_simple/src/constants/app_colors.dart';
 
 class SubHeaderWidget extends StatelessWidget {
 
-  const SubHeaderWidget({required this.text, super.key});
+  const SubHeaderWidget({required this.text, this.lightMode = true, super.key});
   final String text;
+  final bool lightMode;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class SubHeaderWidget extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            color: titleTextColor,
+            color: lightMode ? titleTextColor : titleTextColorLight,
             fontSize: 24,
             fontWeight: FontWeight.bold,
             fontFamily: 'Roboto',
