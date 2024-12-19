@@ -133,8 +133,8 @@ class _SchedulePageState extends State<SchedulePage> {
         () {
           // Filter tasks based on the selected day
           final filteredTasks = _taskController.taskList
-          .where((task) => task.selectedDay == _selectedDay)
-          .toList();
+              .where((task) => task.selectedDay == _selectedDay)
+              .toList();
 
           if (filteredTasks.isEmpty) {
             return const Center(child: Text('No tasks for today.'));
@@ -157,15 +157,38 @@ class _SchedulePageState extends State<SchedulePage> {
                 title: Padding(
                   padding: const EdgeInsets.only(
                     top: Sizes.p12,
-                    bottom: Sizes.p12,
+                    bottom: Sizes.p8,
                   ),
-                  child: Text(
-                    task.title,
-                    style: TextStyle(
-                      color: titleTextColorLight,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        task.title,
+                        style: TextStyle(
+                          color: titleTextColorLight,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      gapH8,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.access_time,
+                            color: titleTextColorLight,
+                            size: 18,
+                          ),
+                          gapW8,
+                          Text(
+                            '${task.startTime} - ${task.endTime}',
+                            style: TextStyle(
+                              color: titleTextColorLight,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
                 subtitle: Padding(
@@ -219,7 +242,10 @@ class _SchedulePageState extends State<SchedulePage> {
                     Navigator.pop(context);
 
                     await Get.to<EditSchedulePage>(
-                      EditSchedulePage(selectedDay: _selectedDay, task: task,),
+                      EditSchedulePage(
+                        selectedDay: _selectedDay,
+                        task: task,
+                      ),
                     );
                     // refetch all tasks
                     await _taskController.getTasks();
@@ -230,8 +256,9 @@ class _SchedulePageState extends State<SchedulePage> {
                 _taskActionButton(
                   label: 'Delete Task',
                   onTap: () {
-                    _taskController..deleteTask(id: task.id!)
-                    ..getTasks();
+                    _taskController
+                      ..deleteTask(id: task.id!)
+                      ..getTasks();
                     Get.back<SchedulePage>();
                   },
                   color: Colors.red,
