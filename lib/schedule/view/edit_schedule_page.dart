@@ -11,8 +11,9 @@ import 'package:my_pup_simple/widgets/subheader.dart';
 import 'package:my_pup_simple/widgets/text_field.dart';
 
 class EditSchedulePage extends StatefulWidget {
-  const EditSchedulePage({required this.selectedDay, super.key});
+  const EditSchedulePage({required this.selectedDay, this.task, super.key});
   final int selectedDay;
+  final Task? task;
 
   @override
   State<EditSchedulePage> createState() => _EditSchedulePageState();
@@ -34,6 +35,28 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
   int _selectedColor = 0;
 
   @override
+  void initState() {
+    super.initState();
+
+    if (widget.task != null) {
+      final task = widget.task!;
+      _titleController.text = task.title;
+      _noteController.text = task.note;
+      _startTime = task.startTime;
+      _endTime = task.endTime;
+      _selectedRemind = task.remind;
+      _selectedColor = task.color;
+    }
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _noteController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +73,9 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
         padding: const EdgeInsets.symmetric(horizontal: Sizes.p32),
         child: Column(
           children: [
-            const SubHeaderWidget(text: 'Add Task'),
+            SubHeaderWidget(
+              text: widget.task == null ? 'Add Task' : 'Edit Task',
+            ),
             gapH24,
             TextFieldWidget(
               label: 'Title',
@@ -168,8 +193,8 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
             ),
             gapH24,
             ButtonWidget(
-              text: 'Create Task',
-              onClicked: _validateData,
+              text: widget.task == null ? 'Create Task' : 'Update Task',
+              onClicked: _saveData,
             ),
           ],
         ),
@@ -211,7 +236,8 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
     );
   }
 
-  void _validateData() {
+  void _saveData() {
+    // validate data first
     if (_titleController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         _snackBar(
@@ -221,7 +247,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       );
       return;
     }
-    
+
     // parse start and end times as date time objects to compare
     final timeFormat = DateFormat('h:mm a');
     final parsedStartTime = timeFormat.parse(_startTime);
@@ -236,10 +262,15 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       );
       return;
     }
-    
-    // add task to database
-    _addTaskToDb();
-    debugPrint('add to ${daysOfTheWeek[widget.selectedDay]}');
+
+    if (widget.task == null) {
+      // add task to database
+      _addTaskToDb();
+      debugPrint('add to ${daysOfTheWeek[widget.selectedDay]}');
+    } else {
+      // update task
+      _updateTask();
+    }
     Get.back<SchedulePage>();
   }
 
@@ -265,5 +296,21 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       ),
     );
     debugPrint('task $id created');
+  }
+
+  Future<void> _updateTask() async {
+    await _taskController.updateTask(
+      task: Task(
+        id: widget.task?.id,
+        title: _titleController.text,
+        note: _noteController.text,
+        startTime: _startTime,
+        endTime: _endTime,
+        selectedDay: widget.selectedDay,
+        remind: _selectedRemind,
+        color: _selectedColor,
+      ),
+    );
+    debugPrint('task ${widget.task?.id} updated');
   }
 }

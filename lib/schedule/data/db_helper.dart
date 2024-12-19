@@ -65,4 +65,28 @@ class DBHelper {
       whereArgs: [id],
     );
   }
+
+  static Future<void> updateTask(Task task) async {
+    final db = await instance.db;
+    await db.rawUpdate('''
+        UPDATE $tableName
+        SET title = ?,
+            note = ?,
+            startTime = ?,
+            endTime = ?,
+            selectedDay = ?,
+            remind = ?,
+            color = ?
+        WHERE id = ?
+      ''', [
+      task.title,
+      task.note,
+      task.startTime,
+      task.endTime,
+      task.selectedDay,
+      task.remind,
+      task.color,
+      task.id,
+    ]);
+  }
 }

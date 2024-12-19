@@ -66,12 +66,12 @@ class _SchedulePageState extends State<SchedulePage> {
               Icons.add,
               color: mainAppColor,
             ),
-            onPressed: () {
-              Get.to<EditSchedulePage>(
+            onPressed: () async {
+              await Get.to<EditSchedulePage>(
                 EditSchedulePage(selectedDay: _selectedDay),
               );
               // refetch all tasks
-              _taskController.getTasks();
+              await _taskController.getTasks();
             },
           ),
         ],
@@ -214,7 +214,16 @@ class _SchedulePageState extends State<SchedulePage> {
                 gapH32,
                 _taskActionButton(
                   label: 'Edit Task',
-                  onTap: () {},
+                  onTap: () async {
+                    // close bottom sheet
+                    Navigator.pop(context);
+
+                    await Get.to<EditSchedulePage>(
+                      EditSchedulePage(selectedDay: _selectedDay, task: task,),
+                    );
+                    // refetch all tasks
+                    await _taskController.getTasks();
+                  },
                   color: mainAppColor,
                 ),
                 gapH16,

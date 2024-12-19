@@ -23,5 +23,9 @@ class TaskController extends GetxController {
 
   void deleteTask({required int id}) {
    DBHelper.deleteTask(id: id);
-  } 
+  }
+
+  Future<void> updateTask({required Task task}) async {
+    await DBHelper.updateTask(task);
+  }
 }
