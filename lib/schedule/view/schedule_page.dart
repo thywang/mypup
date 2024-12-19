@@ -131,18 +131,23 @@ class _SchedulePageState extends State<SchedulePage> {
     return Expanded(
       child: Obx(
         () {
-          if (_taskController.taskList.isEmpty) {
+          // Filter tasks based on the selected day
+          final filteredTasks = _taskController.taskList
+          .where((task) => task.selectedDay == _selectedDay)
+          .toList();
+
+          if (filteredTasks.isEmpty) {
             return const Center(child: Text('No tasks for today.'));
           }
 
           return ListView.separated(
             itemBuilder: (context, index) {
-              final task = _taskController.taskList[index];
+              final task = filteredTasks[index];
               return ListTile(
                 onTap: () {
                   _showTaskActionsBottomSheet(
                     context,
-                    _taskController.taskList[index],
+                    filteredTasks[index],
                   );
                 },
                 tileColor: cardColors[task.color],
@@ -178,7 +183,7 @@ class _SchedulePageState extends State<SchedulePage> {
               );
             },
             separatorBuilder: (context, index) => gapH16,
-            itemCount: _taskController.taskList.length,
+            itemCount: filteredTasks.length,
           );
         },
       ),

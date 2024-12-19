@@ -5,6 +5,13 @@ import 'package:my_pup_simple/schedule/model/task.dart';
 class TaskController extends GetxController {
   final taskList = <Task>[].obs;
 
+  @override
+  void onReady() {
+    super.onReady();
+    // fetch tasks
+    getTasks();
+  }
+
   Future<int> addTask({required Task task}) async {
     return DBHelper.addTask(task);
   }
