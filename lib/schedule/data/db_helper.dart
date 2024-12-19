@@ -32,7 +32,7 @@ class DBHelper {
             note TEXT,
             startTime TEXT,
             endTime TEXT,
-            selectedDay INTEGER,
+            selectedDays TEXT,
             remind INTEGER,
             color INTEGER
           )
@@ -74,7 +74,7 @@ class DBHelper {
             note = ?,
             startTime = ?,
             endTime = ?,
-            selectedDay = ?,
+            selectedDays = ?,
             remind = ?,
             color = ?
         WHERE id = ?
@@ -83,7 +83,7 @@ class DBHelper {
       task.note,
       task.startTime,
       task.endTime,
-      task.selectedDay,
+      task.selectedDays,
       task.remind,
       task.color,
       task.id,

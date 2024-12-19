@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:my_pup_simple/schedule/data/task_controller.dart';
 import 'package:my_pup_simple/schedule/model/task.dart';
 import 'package:my_pup_simple/schedule/view/edit_schedule_page.dart';
@@ -133,8 +134,14 @@ class _SchedulePageState extends State<SchedulePage> {
         () {
           // Filter tasks based on the selected day
           final filteredTasks = _taskController.taskList
-              .where((task) => task.selectedDay == _selectedDay)
-              .toList();
+              .where((task) => task.selectedDays.contains(_selectedDay))
+              .toList()
+            ..sort((task1, task2) {
+              final timeFormat = DateFormat('h:mm a');
+              final parsedStartTime1 = timeFormat.parse(task1.startTime);
+              final parsedStartTime2 = timeFormat.parse(task2.startTime);
+              return parsedStartTime1.compareTo(parsedStartTime2);
+            });
 
           if (filteredTasks.isEmpty) {
             return const Center(child: Text('No tasks for today.'));

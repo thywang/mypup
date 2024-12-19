@@ -4,7 +4,7 @@ class Task {
     required this.note,
     required this.startTime,
     required this.endTime,
-    required this.selectedDay,
+    required this.selectedDays,
     required this.remind,
     required this.color,
     this.id,
@@ -16,7 +16,8 @@ class Task {
         note: json['note'] as String,
         startTime: json['startTime'] as String,
         endTime: json['endTime'] as String,
-        selectedDay: json['selectedDay'] as int,
+        selectedDays:
+            (json['selectedDays'] as String).split(',').map(int.parse).toList(),
         remind: json['remind'] as int,
         color: json['color'] as int,
       );
@@ -26,7 +27,7 @@ class Task {
   final String note;
   final String startTime;
   final String endTime;
-  final int selectedDay;
+  final List<int> selectedDays;
   final int remind;
   final int color;
 
@@ -36,7 +37,7 @@ class Task {
         'note': note,
         'startTime': startTime,
         'endTime': endTime,
-        'selectedDay': selectedDay,
+        'selectedDays': selectedDays.join(','),
         'remind': remind,
         'color': color,
       };

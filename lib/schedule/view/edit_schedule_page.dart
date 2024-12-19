@@ -7,6 +7,7 @@ import 'package:my_pup_simple/schedule/schedule.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
 import 'package:my_pup_simple/widgets/button.dart';
+import 'package:my_pup_simple/widgets/days_checkbox_row.dart';
 import 'package:my_pup_simple/widgets/subheader.dart';
 import 'package:my_pup_simple/widgets/text_field.dart';
 
@@ -34,10 +35,15 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
   // selected color index
   int _selectedColor = 0;
 
+  // selected days to repeat
+  List<bool> _selectedDays = List.generate(7, (index) => false);
+
   @override
   void initState() {
     super.initState();
 
+    // preselect the current day for the task
+    _selectedDays[widget.selectedDay] = true;
     if (widget.task != null) {
       final task = widget.task!;
       _titleController.text = task.title;
@@ -46,6 +52,9 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       _endTime = task.endTime;
       _selectedRemind = task.remind;
       _selectedColor = task.color;
+      for (final dayIndex in task.selectedDays) {
+        _selectedDays[dayIndex] = true;
+      }
     }
   }
 
@@ -69,134 +78,157 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Sizes.p32),
-        child: Column(
-          children: [
-            SubHeaderWidget(
-              text: widget.task == null ? 'Add Task' : 'Edit Task',
-            ),
-            gapH24,
-            TextFieldWidget(
-              label: 'Title',
-              hint: 'Enter your title',
-              controller: _titleController,
-              onChanged: (title) => {},
-            ),
-            gapH24,
-            TextFieldWidget(
-              label: 'Note',
-              hint: 'Enter your note',
-              controller: _noteController,
-              onChanged: (note) => {},
-            ),
-            gapH24,
-            Row(
-              children: [
-                Expanded(
-                  child: TextFieldWidget(
-                    label: 'Start Time',
-                    hint: _startTime,
-                    trailingWidget: IconButton(
-                      onPressed: () async =>
-                          _getTimeFromUser(isStartTime: true),
-                      iconSize: Sizes.p32,
-                      icon: Icon(
-                        Icons.access_time_rounded,
-                        color: mainAppColor,
-                      ),
-                    ),
-                  ),
-                ),
-                gapW12,
-                Expanded(
-                  child: TextFieldWidget(
-                    label: 'End Time',
-                    hint: _endTime,
-                    trailingWidget: IconButton(
-                      onPressed: () async =>
-                          _getTimeFromUser(isStartTime: false),
-                      iconSize: Sizes.p32,
-                      icon: Icon(
-                        Icons.access_time_rounded,
-                        color: mainAppColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            gapH24,
-            TextFieldWidget(
-              label: 'Reminder',
-              hint: '$_selectedRemind minutes before',
-              trailingWidget: DropdownButton(
-                icon: Icon(
-                  Icons.keyboard_arrow_down,
-                  color: grayTextColor,
-                ),
-                iconSize: Sizes.p32,
-                underline: Container(
-                  height: 0,
-                ),
-                items: remindList.map<DropdownMenuItem<String>>((int value) {
-                  return DropdownMenuItem(
-                    value: value.toString(),
-                    child: Text(value.toString()),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  if (newValue == null) return;
-                  setState(() {
-                    _selectedRemind = int.parse(newValue);
-                  });
-                },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Sizes.p32),
+          child: Column(
+            children: [
+              SubHeaderWidget(
+                text: widget.task == null ? 'Add Task' : 'Edit Task',
               ),
-            ),
-            gapH24,
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Color',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    gapH8,
-                    Wrap(
-                      spacing: Sizes.p12,
-                      children: List<Widget>.generate(
-                        cardColors.length,
-                        (index) => GestureDetector(
-                          onTap: () => setState(() {
-                            _selectedColor = index;
-                          }),
-                          child: CircleAvatar(
-                            radius: Sizes.p16,
-                            backgroundColor: cardColors[index],
-                            child: _selectedColor == index
-                                ? const Icon(
-                                    Icons.done,
-                                    color: Colors.white,
-                                    size: Sizes.p16,
-                                  )
-                                : null,
-                          ),
+              gapH24,
+              TextFieldWidget(
+                label: 'Title',
+                hint: 'Enter your title',
+                controller: _titleController,
+                onChanged: (title) => {},
+              ),
+              gapH24,
+              TextFieldWidget(
+                label: 'Note',
+                hint: 'Enter your note',
+                controller: _noteController,
+                onChanged: (note) => {},
+              ),
+              gapH24,
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFieldWidget(
+                      label: 'Start Time',
+                      hint: _startTime,
+                      trailingWidget: IconButton(
+                        onPressed: () async =>
+                            _getTimeFromUser(isStartTime: true),
+                        iconSize: Sizes.p32,
+                        icon: Icon(
+                          Icons.access_time_rounded,
+                          color: mainAppColor,
                         ),
                       ),
                     ),
-                  ],
+                  ),
+                  gapW12,
+                  Expanded(
+                    child: TextFieldWidget(
+                      label: 'End Time',
+                      hint: _endTime,
+                      trailingWidget: IconButton(
+                        onPressed: () async =>
+                            _getTimeFromUser(isStartTime: false),
+                        iconSize: Sizes.p32,
+                        icon: Icon(
+                          Icons.access_time_rounded,
+                          color: mainAppColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              gapH24,
+              TextFieldWidget(
+                label: 'Remind',
+                hint: '$_selectedRemind minutes before',
+                trailingWidget: DropdownButton(
+                  icon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: grayTextColor,
+                  ),
+                  iconSize: Sizes.p32,
+                  underline: Container(
+                    height: 0,
+                  ),
+                  items: remindList.map<DropdownMenuItem<String>>((int value) {
+                    return DropdownMenuItem(
+                      value: value.toString(),
+                      child: Text(value.toString()),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    if (newValue == null) return;
+                    setState(() {
+                      _selectedRemind = int.parse(newValue);
+                    });
+                  },
                 ),
-              ],
-            ),
-            gapH24,
-            ButtonWidget(
-              text: widget.task == null ? 'Create Task' : 'Update Task',
-              onClicked: _saveData,
-            ),
-          ],
+              ),
+              gapH24,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Repeat',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  gapH8,
+                  // List of checkboxes for each day of the week
+                  DaysCheckboxRow(
+                    selectedDays: _selectedDays,
+                    onChanged: (newSelectedDays) => setState(() {
+                      _selectedDays = newSelectedDays;
+                    }),
+                  ),
+                ],
+              ),
+              gapH24,
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Color',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      gapH8,
+                      Wrap(
+                        spacing: Sizes.p12,
+                        children: List<Widget>.generate(
+                          cardColors.length,
+                          (index) => GestureDetector(
+                            onTap: () => setState(() {
+                              _selectedColor = index;
+                            }),
+                            child: CircleAvatar(
+                              radius: Sizes.p16,
+                              backgroundColor: cardColors[index],
+                              child: _selectedColor == index
+                                  ? const Icon(
+                                      Icons.done,
+                                      color: Colors.white,
+                                      size: Sizes.p16,
+                                    )
+                                  : null,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              gapH24,
+              ButtonWidget(
+                text: widget.task == null ? 'Create Task' : 'Update Task',
+                onClicked: _saveTask,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -236,7 +268,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
     );
   }
 
-  void _saveData() {
+  void _saveTask() {
     // validate data first
     if (_titleController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -262,11 +294,30 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       );
       return;
     }
+    
+    // make sure at least one day is selected
+    if (!_selectedDays.contains(true)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        _snackBar(
+          label: 'Select at least one day to repeat',
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+      return;
+    }
 
     if (widget.task == null) {
       // add task to database
       _addTaskToDb();
-      debugPrint('add to ${daysOfTheWeek[widget.selectedDay]}');
+      final selectedDays = _selectedDays
+          .asMap()
+          .entries
+          .where((entry) => entry.value)
+          .map((entry) => daysOfTheWeek[entry.key])
+          .toList();
+      debugPrint(
+        'add to $selectedDays',
+      );
     } else {
       // update task
       _updateTask();
@@ -290,7 +341,12 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
         note: _noteController.text,
         startTime: _startTime,
         endTime: _endTime,
-        selectedDay: widget.selectedDay,
+        selectedDays: _selectedDays
+            .asMap()
+            .entries
+            .where((entry) => entry.value)
+            .map((entry) => entry.key)
+            .toList(),
         remind: _selectedRemind,
         color: _selectedColor,
       ),
@@ -306,7 +362,12 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
         note: _noteController.text,
         startTime: _startTime,
         endTime: _endTime,
-        selectedDay: widget.selectedDay,
+        selectedDays: _selectedDays
+            .asMap()
+            .entries
+            .where((entry) => entry.value)
+            .map((entry) => entry.key)
+            .toList(),
         remind: _selectedRemind,
         color: _selectedColor,
       ),
