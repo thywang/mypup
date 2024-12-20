@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +10,7 @@ import 'package:my_pup_simple/schedule/view/edit_schedule_page.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
 import 'package:my_pup_simple/widgets/subheader.dart';
+import 'package:path_provider/path_provider.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key});
@@ -44,24 +48,43 @@ class _SchedulePageState extends State<SchedulePage> {
         backgroundColor: Colors.transparent,
         toolbarHeight: 80,
         actions: <Widget>[
-          TextButton.icon(
-            label: const Text(
-              'Add Task',
-              style: TextStyle(
-                fontSize: 18,
-              ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.download, color: mainAppColor),
+                      onPressed: _downloadTasks,
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.upload, color: mainAppColor),
+                      onPressed: _uploadTasks,
+                    ),
+                  ],
+                ),
+                TextButton.icon(
+                  label: const Text(
+                    'Add Task',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  icon: Icon(
+                    Icons.add,
+                    color: mainAppColor,
+                  ),
+                  onPressed: () async {
+                    await Get.to<EditSchedulePage>(
+                      EditSchedulePage(selectedDay: _selectedDay),
+                    );
+                    // refetch all tasks
+                    await _taskController.getTasks();
+                  },
+                ),
+              ],
             ),
-            icon: Icon(
-              Icons.add,
-              color: mainAppColor,
-            ),
-            onPressed: () async {
-              await Get.to<EditSchedulePage>(
-                EditSchedulePage(selectedDay: _selectedDay),
-              );
-              // refetch all tasks
-              await _taskController.getTasks();
-            },
           ),
         ],
       ),
@@ -235,7 +258,6 @@ class _SchedulePageState extends State<SchedulePage> {
                   onTap: () async {
                     // close bottom sheet
                     Navigator.pop(context);
-
                     await Get.to<EditSchedulePage>(
                       EditSchedulePage(
                         selectedDay: _selectedDay,
@@ -300,6 +322,56 @@ class _SchedulePageState extends State<SchedulePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _downloadTasks() async {
+    final tasks = _taskController.taskList;
+    final tasksJson = tasks.map((task) => task.toJson()).toList();
+
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/tasks.json');
+    await file.writeAsString(tasksJson.toString());
+
+    // notify user
+    Get.snackbar(
+      'Tasks Downloaded',
+      'Tasks have been downloaded to ${file.path}',
+      snackPosition: SnackPosition.BOTTOM,
+      duration: null, // wait for user to dismiss
+    );
+  }
+
+  Future<void> _uploadTasks() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['json'],
+    );
+
+    if (result == null || result.files.single.path == null) {
+      return;
+    }
+
+    final file = File(result.files.single.path!);
+    final tasksJson = await file.readAsString();
+
+    final tasks = (jsonDecode(tasksJson) as List<dynamic>)
+        .map(
+          (json) => Task.fromJson(json as Map<String, dynamic>),
+        )
+        .toList();
+
+    // add tasks to database
+    for (final task in tasks) {
+      await _taskController.addTask(task: task);
+    }
+    await _taskController.getTasks();
+
+    // notify user
+    Get.snackbar(
+      'Tasks Uploaded',
+      'Tasks uploaded successfully',
+      snackPosition: SnackPosition.BOTTOM,
     );
   }
 }
