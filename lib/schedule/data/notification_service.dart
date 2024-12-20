@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get/route_manager.dart';
+import 'package:intl/intl.dart';
+import 'package:my_pup_simple/schedule/model/task.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-class NotifyHelper {
+class NotificationService {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  // notifications for iOS
   Future<void> initializeNotification() async {
-    tz.initializeTimeZones();
+    await _configureLocalTimezone();
 
+    // notifications for iOS
     final initializationSettingsDarwin = DarwinInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
@@ -34,43 +37,41 @@ class NotifyHelper {
     );
   }
 
-  Future<void> displayNotification({
-    required String title,
-    required String body,
-  }) async {
-    const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'your channel id',
-      'your channel name',
-      importance: Importance.max,
-      priority: Priority.high,
-    );
-    const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
-    const platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics,
-      iOS: iOSPlatformChannelSpecifics,
-    );
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      title,
-      body,
-      platformChannelSpecifics,
-      payload: 'Default_Sound',
-    );
+  Future<void> scheduleTaskNotifications(Task task) async {
+    final timeFormat = DateFormat('h:mm a');
+    for (final day in task.selectedDays) {
+      final parsedStartTime = timeFormat.parse(task.startTime);
+      final notificationTime = parsedStartTime.subtract(
+        Duration(
+          minutes: task.remind,
+        ),
+      );
+      await scheduledNotification(
+        hour: notificationTime.hour,
+        minutes: notificationTime.minute,
+        task: task,
+        weekday: day + 1, // selectedDays is 0-indexed
+      );
+    }
   }
 
   Future<void> scheduledNotification({
-    required String title,
-    required String body,
+    required int hour,
+    required int minutes,
+    required Task task,
+    required int weekday,
   }) async {
+    final scheduled = _calculateNotificationDateTime(
+      hour: hour,
+      minutes: minutes,
+      weekday: weekday,
+    );
+
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      title,
-      body,
-      tz.TZDateTime.from(
-        // TODO: replace with passed datetime
-        tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
-        tz.local,
-      ),
+      task.id!,
+      task.title,
+      task.note,
+      scheduled,
       const NotificationDetails(
         iOS: DarwinNotificationDetails(
           sound: 'default.wav',
@@ -86,7 +87,44 @@ class NotifyHelper {
       androidScheduleMode: AndroidScheduleMode.exact,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
     );
+  }
+
+  Future<void> cancelNotification(int id) async {
+    await flutterLocalNotificationsPlugin.cancel(id);
+  }
+
+  tz.TZDateTime _calculateNotificationDateTime({
+    required int hour,
+    required int minutes,
+    required int weekday,
+  }) {
+    final now = tz.TZDateTime.now(tz.local);
+    var scheduled = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minutes,
+    );
+
+    while (scheduled.weekday != weekday) {
+      scheduled = scheduled.add(const Duration(days: 1));
+    }
+
+    if (scheduled.isBefore(now)) {
+      scheduled = scheduled.add(const Duration(days: 7));
+    }
+
+    return scheduled;
+  }
+
+  Future<void> _configureLocalTimezone() async {
+    tz.initializeTimeZones();
+    final timezone = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timezone));
   }
 
   void requestIOSPermissions() {
@@ -110,13 +148,11 @@ class NotifyHelper {
 
   @pragma('vm:entry-point')
   void notificationTapBackground(NotificationResponse notificationResponse) {
-    // ignore: avoid_print
-    print('notification(${notificationResponse.id}) action tapped: '
+    debugPrint('notification(${notificationResponse.id}) action tapped: '
         '${notificationResponse.actionId} with'
         ' payload: ${notificationResponse.payload}');
     if (notificationResponse.input?.isNotEmpty ?? false) {
-      // ignore: avoid_print
-      print(
+      debugPrint(
           'notification action tapped with input: ${notificationResponse.input}');
     }
   }

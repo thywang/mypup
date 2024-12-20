@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:my_pup_simple/schedule/data/task_controller.dart';
+import 'package:my_pup_simple/schedule/controller/task_controller.dart';
 import 'package:my_pup_simple/schedule/model/task.dart';
 import 'package:my_pup_simple/schedule/schedule.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
