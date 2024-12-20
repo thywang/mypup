@@ -3,9 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:get/get.dart';
 import 'package:my_pup_simple/bootstrap.dart';
 import 'package:my_pup_simple/firebase_options.dart';
 import 'package:my_pup_simple/puppy_profile/data/puppy_preferences.dart';
+import 'package:my_pup_simple/schedule/data/notification_service.dart';
 import 'package:my_pup_simple/src/app/app.dart';
 import 'package:my_pup_simple/src/localization/string_hardcoded.dart';
 
@@ -17,6 +19,13 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // initialize notification service
+  final notificationService = NotificationService();
+  await notificationService.initializeNotification();
+  notificationService.requestIOSPermissions();
+  // register notification service globally
+  Get.put(notificationService);
 
   // turn off the # in the URLs on the web
   usePathUrlStrategy();

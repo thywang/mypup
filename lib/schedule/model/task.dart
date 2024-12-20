@@ -16,11 +16,22 @@ class Task {
         note: json['note'] as String,
         startTime: json['startTime'] as String,
         endTime: json['endTime'] as String,
-        selectedDays:
-            (json['selectedDays'] as String).split(',').map(int.parse).toList(),
+        selectedDays: _parseSelectedDays(json['selectedDays']),
         remind: json['remind'] as int,
         color: json['color'] as int,
       );
+
+  static List<int> _parseSelectedDays(dynamic selectedDays) {
+    // Check if selectedDays is already a List<int>
+    if (selectedDays is List<int>) {
+      return List<int>.from(selectedDays); // Just return it as is
+    }
+    else if (selectedDays is String) {
+      return selectedDays.split(',').map(int.parse).toList();
+    }
+
+    throw Exception('Invalid type for selectedDays');
+  }
 
   final int? id;
   final String title;

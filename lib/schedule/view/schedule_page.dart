@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:my_pup_simple/schedule/data/task_controller.dart';
+import 'package:my_pup_simple/schedule/controller/task_controller.dart';
 import 'package:my_pup_simple/schedule/model/task.dart';
 import 'package:my_pup_simple/schedule/view/edit_schedule_page.dart';
 import 'package:my_pup_simple/src/constants/app_colors.dart';
 import 'package:my_pup_simple/src/constants/app_sizes.dart';
-
-import 'package:my_pup_simple/src/helpers/notify_helper.dart';
 import 'package:my_pup_simple/widgets/subheader.dart';
 
 class SchedulePage extends StatefulWidget {
@@ -28,19 +26,9 @@ List<String> daysOfTheWeek = [
 ];
 
 class _SchedulePageState extends State<SchedulePage> {
-  NotifyHelper? notifyHelper;
   int _selectedDay = 0;
   final PageController _pageController = PageController(viewportFraction: 0.5);
   final _taskController = Get.put(TaskController());
-
-  @override
-  void initState() {
-    super.initState();
-    notifyHelper = NotifyHelper();
-    notifyHelper
-      ?..initializeNotification()
-      ..requestIOSPermissions();
-  }
 
   @override
   void dispose() {
