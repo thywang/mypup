@@ -42,20 +42,34 @@ class TaskController extends GetxController {
     taskList.assignAll(tasks);
   }
 
-  Future<void> deleteTask({required int id}) async {
-    await DBHelper.deleteTask(id: id);
-    await _notificationService.cancelNotification(id);
+  Future<void> deleteTask({required Task task}) async {
+    final taskId = task.id!;
+    final selectedDays = task.selectedDays;
+    await DBHelper.deleteTask(id: taskId);
+    await _notificationService.cancelNotifications(
+      taskId: taskId,
+      selectedDays: selectedDays,
+    );
   }
 
-  Future<void> updateTask({required Task task}) async {
+  Future<Task?> updateTask({required Task task}) async {
+    // get the existing task from the database
+    final existingTask = await DBHelper.getTask(id: task.id!);
+    if (existingTask == null) {
+      return null;
+    }
+    // cancel existing notifications using existing task's selected days
+    await _notificationService.cancelNotifications(
+      taskId: task.id!,
+      selectedDays: existingTask.selectedDays,
+    );
     await DBHelper.updateTask(task);
-    // cancel existing notifications
-    await _notificationService.cancelNotification(task.id!);
     // schedule new notifications
     unawaited(
       Future.microtask(
         () => _notificationService.scheduleTaskNotifications(task),
       ),
     );
+    return task;
   }
 }

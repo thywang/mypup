@@ -233,7 +233,9 @@ class _SchedulePageState extends State<SchedulePage> {
   }
 
   Future<void> _showTaskActionsBottomSheet(
-      BuildContext context, Task task) async {
+    BuildContext context,
+    Task task,
+  ) async {
     return showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
@@ -275,7 +277,7 @@ class _SchedulePageState extends State<SchedulePage> {
                   label: 'Delete Task',
                   onTap: () {
                     _taskController
-                      ..deleteTask(id: task.id!)
+                      ..deleteTask(task: task)
                       ..getTasks();
                     Get.back<SchedulePage>();
                   },
@@ -298,7 +300,8 @@ class _SchedulePageState extends State<SchedulePage> {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            horizontal: Sizes.p16), // Add space on the left and right
+          horizontal: Sizes.p16,
+        ), // Add space on the left and right
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: color,
