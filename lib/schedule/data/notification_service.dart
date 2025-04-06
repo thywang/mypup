@@ -46,7 +46,7 @@ class NotificationService {
           minutes: task.remind,
         ),
       );
-      await scheduledNotification(
+      await scheduleNotification(
         hour: notificationTime.hour,
         minutes: notificationTime.minute,
         task: task,
@@ -55,7 +55,15 @@ class NotificationService {
     }
   }
 
-  Future<void> scheduledNotification({
+  /// Gets the notification ID for a task based on its ID and the weekday.
+  int _getNotificationId({
+    required int taskId,
+    required int weekday,
+  }) {
+    return taskId * 10 + weekday;
+  }
+
+  Future<void> scheduleNotification({
     required int hour,
     required int minutes,
     required Task task,
@@ -66,9 +74,11 @@ class NotificationService {
       minutes: minutes,
       weekday: weekday,
     );
+    final notificationId =
+        _getNotificationId(taskId: task.id!, weekday: weekday);
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      task.id!,
+      notificationId,
       task.title,
       task.note,
       scheduled,
@@ -91,8 +101,17 @@ class NotificationService {
     );
   }
 
-  Future<void> cancelNotification(int id) async {
-    await flutterLocalNotificationsPlugin.cancel(id);
+  Future<void> cancelNotifications({
+    required int taskId,
+    required List<int> selectedDays,
+  }) async {
+    for (final day in selectedDays) {
+      final notificationId = _getNotificationId(
+        taskId: taskId,
+        weekday: day + 1, // selectedDays is 0-indexed
+      );
+      await flutterLocalNotificationsPlugin.cancel(notificationId);
+    }
   }
 
   tz.TZDateTime _calculateNotificationDateTime({

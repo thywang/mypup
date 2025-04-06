@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -193,7 +195,9 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
                       const Text(
                         'Color',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                       gapH8,
                       Wrap(
@@ -240,6 +244,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       debugPrint('Time cancelled');
       return;
     }
+    if (!mounted) return; // Ensure the widget is still mounted
     final formattedTime = pickedTime.format(context);
     if (isStartTime) {
       setState(() {
@@ -268,7 +273,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
     );
   }
 
-  void _saveTask() {
+  Future<void> _saveTask() async {
     // validate data first
     if (_titleController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -294,7 +299,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       );
       return;
     }
-    
+
     // make sure at least one day is selected
     if (!_selectedDays.contains(true)) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -308,7 +313,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
 
     if (widget.task == null) {
       // add task to database
-      _addTaskToDb();
+      unawaited(_addTaskToDb());
       final selectedDays = _selectedDays
           .asMap()
           .entries
@@ -320,7 +325,25 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       );
     } else {
       // update task
-      _updateTask();
+      final updatedTask = await _updateTask();
+
+      if (mounted) {
+        if (updatedTask == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            _snackBar(
+              label: 'Failed to update task',
+              backgroundColor: Colors.redAccent,
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            _snackBar(
+              label: 'Task updated successfully',
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
+      }
     }
     Get.back<SchedulePage>();
   }
@@ -354,8 +377,8 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
     debugPrint('task $id created');
   }
 
-  Future<void> _updateTask() async {
-    await _taskController.updateTask(
+  Future<Task?> _updateTask() async {
+    final updatedTask = await _taskController.updateTask(
       task: Task(
         id: widget.task?.id,
         title: _titleController.text,
@@ -373,5 +396,6 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       ),
     );
     debugPrint('task ${widget.task?.id} updated');
+    return updatedTask;
   }
 }
